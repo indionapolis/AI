@@ -31,8 +31,7 @@ def uploaded_file(filename):
     img = Image.open(path)
 
 
-
-    filename = 'http://0.0.0.0:5000/uploads/' + filename
+    filename = '/uploads/' + filename
     return render_template('result.html', filename=filename)
 
 
