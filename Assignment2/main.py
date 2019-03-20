@@ -16,6 +16,9 @@ def index():
         except KeyError:
             return redirect(url_for('index'))
 
+        if not file.filename:
+            return redirect(url_for('index'))
+
         file.save(os.path.join(server.config['UPLOAD_FOLDER'], file.filename))
 
         return redirect(url_for('uploaded_file', filename=file.filename))
