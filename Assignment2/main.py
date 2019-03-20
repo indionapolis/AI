@@ -30,7 +30,6 @@ def uploaded_file(filename):
     # image to process
     img = Image.open(path)
 
-
     filename = '/uploads/' + filename
     return render_template('result.html', filename=filename)
 
