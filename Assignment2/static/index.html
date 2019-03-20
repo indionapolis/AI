@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>welcome</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="static/main.css">
+</head>
+<body>
+
+
+<div class="container" style="height: 20vh; padding-top: 8vh;">
+    <div class="text-center">
+        <h1 style="font-family: 'Noto Sans', sans-serif;">Upload image</h1>
+    </div>
+</div>
+
+
+<div class="container " style="height: 50vh; padding-top: 25vh;">
+
+    <form method=post enctype=multipart/form-data>
+        <div class="form-row justify-content-center">
+            <div class="col-md-4">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+                <input type="file" name=file class="custom-file-input" id="customFile">
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+
+
+</body>
+</html>
