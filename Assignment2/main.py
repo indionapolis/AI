@@ -42,4 +42,5 @@ def send_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
 
-server.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    server.run(host='0.0.0.0', port=5000)
