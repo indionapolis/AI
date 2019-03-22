@@ -30,12 +30,16 @@
             </div>
 
             <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                <button id="but" type="submit" class="btn btn-primary mb-2">Submit</button>
             </div>
+
+            <button id="spin-but" class="btn btn-primary" type="button" style="display:none;" disabled>
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Processing...
+            </button>
         </div>
     </form>
 
-    <div id="loader" style="display:none;"></div>
 </div>
 
 
@@ -46,11 +50,10 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-
     function showLoader() {
-        document.getElementById("form").style.display = "none";
         document.getElementById("header").innerText = "Please wait";
-        document.getElementById("loader").style.display = "block";
+        document.getElementById("but").style.display = "none";
+        document.getElementById("spin-but").style.display = "block";
     }
 </script>
 
