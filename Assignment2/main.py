@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from PIL import Image
+import time
 import os
 
 server = Flask(__name__)
@@ -30,6 +31,7 @@ def index():
 def uploaded_file(filename):
     path = os.path.join(server.config['UPLOAD_FOLDER'], filename)
 
+    time.sleep(6)
     # image to process
     img = Image.open(path)
 
