@@ -31,7 +31,7 @@ def index():
 def uploaded_file(filename):
     path = os.path.join(server.config['UPLOAD_FOLDER'], filename)
 
-    time.sleep(699)
+    time.sleep(5)
     # image to process
     img = Image.open(path)
 

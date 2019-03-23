@@ -22,12 +22,14 @@
 
 <div class="container justify-content-center" style="height: 50vh; padding-top: 25vh;">
 
-    <form id="form" method=post enctype=multipart/form-data onsubmit="showLoader()">
+    <form id="form" method=post enctype=multipart/form-data onsubmit="return showLoader()">
         <div class="form-row justify-content-center">
-            <div class="col-md-4">
-                <label class="custom-file-label" for="customFile">Choose file</label>
+            <div class="col-md-4" id="filein">
+                <label id="lbl-txt" class="custom-file-label" for="customFile">Choose file</label>
                 <input type="file" name=file class="custom-file-input" id="customFile">
+                <input type="file" name=file class="custom-file-input" id="customFileFake" disabled style="display: none">
             </div>
+
 
             <div class="col-auto">
                 <button id="but" type="submit" class="btn btn-primary mb-2">Submit</button>
@@ -48,12 +50,23 @@
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        document.getElementById("lbl-txt").style.color = "#495057";
     });
 
     function showLoader() {
+        if (document.getElementById("lbl-txt").innerHTML === "Choose file") {
+            document.getElementById("lbl-txt").style.color = "red";
+            document.getElementById("but").blur();
+
+            return false;
+        }
         document.getElementById("header").innerText = "Please wait";
         document.getElementById("but").style.display = "none";
         document.getElementById("spin-but").style.display = "block";
+        document.getElementById("customFile").style.display = "none";
+        document.getElementById("customFileFake").style.display = "block";
+
+        return true;
     }
 </script>
 

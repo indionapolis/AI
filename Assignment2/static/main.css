@@ -44,3 +44,8 @@
   from{ bottom:-100px; opacity:0 }
   to{ bottom:0; opacity:1 }
 }
+
+/*.btn:focus, .btn:active {*/
+  /*outline: none !important;*/
+  /*box-shadow: none !important;*/
+/*}*/
