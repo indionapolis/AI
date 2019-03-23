@@ -1,7 +1,9 @@
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
-from PIL import Image
+from PIL import Image, PSDraw
+import numpy as np
 import time
 import os
+from gp_core import GeneticPrograming
 
 server = Flask(__name__)
 
@@ -20,9 +22,10 @@ def index():
         if not file.filename:
             return redirect(url_for('index'))
 
-        file.save(os.path.join(server.config['UPLOAD_FOLDER'], file.filename))
+        filename = f'{int(time.time())}{file.filename}'
+        file.save(os.path.join(server.config['UPLOAD_FOLDER'], filename))
 
-        return redirect(url_for('uploaded_file', filename=file.filename))
+        return redirect(url_for('uploaded_file', filename=filename))
     else:
         return server.send_static_file('index.html')
 
@@ -31,9 +34,16 @@ def index():
 def uploaded_file(filename):
     path = os.path.join(server.config['UPLOAD_FOLDER'], filename)
 
-    time.sleep(5)
     # image to process
-    img = Image.open(path)
+    im = Image.open(path)
+    im = im.convert(mode='1')
+
+    gp = GeneticPrograming(im)
+
+    im = gp.get_best()
+
+    # save image and return
+    im.save(path)
 
     filename = '/uploads/' + filename
     return render_template('result.html', filename=filename)
