@@ -4,8 +4,8 @@ import numpy as np
 import random
 import math
 
-HEIGHT = 200
-WIDTH = 200
+HEIGHT = 512
+WIDTH = 512
 RADIUS = WIDTH // 5
 
 
@@ -113,9 +113,9 @@ class GeneticPrograming:
             self.population += [offspring]
             self.population = self.get_best()
 
-            i += 1
-            if i % 5000 == 0:
-                self.population[0].representation.show()
+            # i += 1
+            # if i % 50000 == 0:
+            #     self.population[0].representation.show()
 
 
 def generatePolygon(ctrX: int, ctrY: int, aveRadius: int, irregularity: float, spikiness: float, numVerts: int):
@@ -201,10 +201,10 @@ def random_normal_color():
 
 if __name__ == '__main__':
     # todo generate initial picture more precise
-    im = Image.open("/Users/Pavel/programs/AI/Assignment2/samples/judith.jpg").resize((WIDTH, HEIGHT))
-    gp = GeneticPrograming(im, 30000)
+    im = Image.open("/Users/Pavel/programs/AI/Assignment2/samples/van1.jpg").resize((WIDTH, HEIGHT))
+    gp = GeneticPrograming(im, 300000)
     gp.compute()
-    gp.get_best()[0].representation.show()
+    gp.get_best()[0].representation.save('/Users/Pavel/programs/AI/Assignment2/uploads/judith.jpg')
     # new1 = DNA.random_dna()
     # new1.representation().show()
     # new2 = DNA.random_dna()

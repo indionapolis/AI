@@ -37,10 +37,10 @@ def uploaded_file(filename):
     # image to process
     im = Image.open(path)
 
-    gp = GeneticPrograming(im.resize((200, 200)), 10000)
+    gp = GeneticPrograming(im, 50000)
     gp.compute()
 
-    im = gp.get_best()[0]
+    im = gp.get_best()[0].representation
 
     # save image and return
     im.save(path)
