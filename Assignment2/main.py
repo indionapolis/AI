@@ -36,11 +36,11 @@ def uploaded_file(filename):
 
     # image to process
     im = Image.open(path)
-    im = im.convert(mode='1')
 
-    gp = GeneticPrograming(im)
+    gp = GeneticPrograming(im.resize((200, 200)), 10000)
+    gp.compute()
 
-    im = gp.get_best()
+    im = gp.get_best()[0]
 
     # save image and return
     im.save(path)
