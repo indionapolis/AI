@@ -1,9 +1,8 @@
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
-from PIL import Image, PSDraw
-import numpy as np
+from PIL import Image
 import time
 import os
-from gp_core import GeneticPrograming
+from ep_core import GeneticPrograming
 
 server = Flask(__name__)
 
@@ -37,7 +36,7 @@ def uploaded_file(filename):
     # image to process
     im = Image.open(path)
 
-    gp = GeneticPrograming(im, 50000)
+    gp = GeneticPrograming(im, 5000)
     gp.compute()
 
     im = gp.get_best()[0].representation

@@ -3,6 +3,7 @@ from typing import List
 import numpy as np
 import random
 import math
+import sys
 
 HEIGHT = 512
 WIDTH = 512
@@ -24,23 +25,23 @@ class Polygon:
         return Polygon(position, color)
 
 
-class DNA:
-    def __init__(self, genes: List[Polygon]):
+class Gene:
+    def __init__(self, DNAs: List[Polygon]):
         # array of polygons
-        self.genes = genes
+        self.DNAs = DNAs
 
     @property
     def representation(self):
         img = Image.new('RGB', [WIDTH, HEIGHT], (0, 0, 0))
         # img = Image.alpha_composite(img, tmp)
         draw = ImageDraw.Draw(img, 'RGBA')
-        for gene in self.genes:
-            draw.polygon(gene.position, gene.color)
+        for DNA in self.DNAs:
+            draw.polygon(DNA.position, DNA.color)
         return img
 
     @staticmethod
     def random_dna():
-        return DNA([Polygon.random_polygon() for _ in range(150)])
+        return Gene([Polygon.random_polygon() for _ in range(150)])
 
 
 class GeneticPrograming:
@@ -48,13 +49,13 @@ class GeneticPrograming:
         self.number_of_epochs = epochs
         self.origin = origin
         self.size = origin.size
-        self.population: List[DNA] = []
+        self.population: List[Gene] = []
 
     def init_population(self):
-        # generate list of random images
-        self.population = [DNA.random_dna() for _ in range(1)]
+        # generate list of random genes
+        self.population = [Gene.random_dna() for _ in range(1)]
 
-    def fitness_evaluation(self, gene: DNA):
+    def fitness_evaluation(self, gene: Gene):
         # reversed Mean Squared Error of some item with original picture
         ev = sim(gene.representation, self.origin)
         return ev
@@ -81,18 +82,18 @@ class GeneticPrograming:
                 self.mutation(gene)
 
     @staticmethod
-    def mutation(gene: DNA):
-        gene.genes[random.randint(0, len(gene.genes)-1)] = Polygon.random_polygon()
-        return
-        if random.random() > 0.5:
-            polygon.color = random_normal_color()
-        else:
-            point = polygon.position[random.randint(0, 2)]
+    def mutation(gene: Gene):
+        gene.DNAs[random.randint(0, len(gene.DNAs) - 1)] = Polygon.random_polygon()
 
-            if random.randint(0, 1):
-                point = (point[0] + random.randint(-RADIUS, RADIUS), point[1])
-            else:
-                point = (point[0], point[1] + random.randint(-RADIUS, RADIUS))
+        # if random.random() > 0.5:
+        #     polygon.color = random_normal_color()
+        # else:
+        #     point = polygon.position[random.randint(0, 2)]
+        #
+        #     if random.randint(0, 1):
+        #         point = (point[0] + random.randint(-RADIUS, RADIUS), point[1])
+        #     else:
+        #         point = (point[0], point[1] + random.randint(-RADIUS, RADIUS))
 
     def get_best(self, offset=1):
         score = [self.fitness_evaluation(item) for item in self.population]
@@ -105,17 +106,17 @@ class GeneticPrograming:
 
         i = 0
         for generation in range(self.number_of_epochs):
-            genes = self.population[0].genes.copy()
+            DNAs = self.population[0].DNAs.copy()
 
-            offspring = DNA(genes)
+            offspring = Gene(DNAs)
             self.mutation(offspring)
 
             self.population += [offspring]
             self.population = self.get_best()
 
-            # i += 1
-            # if i % 50000 == 0:
-            #     self.population[0].representation.show()
+            i += 1
+            if i % 15000 == 0:
+                self.population[0].representation.save(f'uploads/gen{i}.jpg')
 
 
 def generatePolygon(ctrX: int, ctrY: int, aveRadius: int, irregularity: float, spikiness: float, numVerts: int):
@@ -200,14 +201,9 @@ def random_normal_color():
 
 
 if __name__ == '__main__':
+    path = sys.argv[1]
     # todo generate initial picture more precise
-    im = Image.open("/Users/Pavel/programs/AI/Assignment2/samples/van1.jpg").resize((WIDTH, HEIGHT))
-    gp = GeneticPrograming(im, 300000)
+    im = Image.open(path).resize((WIDTH, HEIGHT))
+    gp = GeneticPrograming(im, 100000)
     gp.compute()
-    gp.get_best()[0].representation.save('/Users/Pavel/programs/AI/Assignment2/uploads/judith.jpg')
-    # new1 = DNA.random_dna()
-    # new1.representation().show()
-    # new2 = DNA.random_dna()
-    # new2.representation().show()
-    # new3 = GeneticPrograming.cross(new1, new2)
-    # new3.representation().show()
+    gp.get_best()[0].representation.save('uploads/res.' + path.split('.')[1])
