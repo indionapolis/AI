@@ -12,6 +12,13 @@ Professor Dr. J.A.Brown
 
 * to use only EA run:     ```python ep_core.py [ path to picture ]```    then you will get result.jpg image in current directory
 
+### Docker use case:
+
+* to create docker image run: ```docker build -t ai_test [ path to Dockerfile ] ```
+* to start server run: ```docker run --rm -p 5000:5000 -v [ your local folder for results ]:/app/uploads ai_test``` and go to <http://0.0.0.0:5000/>
+* to use only EA run: ```docker run --rm -v [ your local folder with picture ]:/app/img -v [ your local folder for results ]:/app/uploads ai_test python ep_core.py img/[ picture name ]```
+
+
 ### In this repository:
 
 ```angular2html

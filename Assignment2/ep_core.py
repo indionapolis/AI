@@ -204,6 +204,7 @@ if __name__ == '__main__':
     path = sys.argv[1]
     # todo generate initial picture more precise
     im = Image.open(path).resize((WIDTH, HEIGHT))
+    im = im.convert('RGB')
     gp = GeneticPrograming(im, 100000)
     gp.compute()
     gp.get_best()[0].representation.save('uploads/res.' + path.split('.')[1])
